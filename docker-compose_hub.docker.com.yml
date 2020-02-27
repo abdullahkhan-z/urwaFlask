@@ -1,0 +1,24 @@
+# this file is for hub.docker.com
+# in order to do 'automatic build'
+# of corresponding image located there
+
+version: "3.3"
+
+services:
+  bfa_web:
+    container_name: bfa_web
+    image: dm4rnde/flask-app-base-apache2-wsgi-py3-ubuntu
+    networks:
+      - bfa_netw
+    build: 
+      context: .
+      args:
+        - BUILD_DATE=${BUILD_DATE}
+        - VCS_REF=${VCS_REF}
+        - VERSION=${VERSION}
+    ports:
+      - "8888:80"
+    restart: always
+
+networks:
+  bfa_netw:
